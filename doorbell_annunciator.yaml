@@ -1,0 +1,54 @@
+alias: Doorbell annunciator (flag 01)
+description: >-
+  Whenever the doorbell is pressed, this automation turns on the bell for a
+  minimum period set in the timer helper, and activates flag 01 on the servant
+  call annunciator 
+trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.servant_call_annunciator_bell_push_1
+    to: "on"
+    id: doorbell_pressed
+  - platform: state
+    entity_id:
+      - timer.servant_call_bell_timer
+    to: idle
+    id: bell_timer_end
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - doorbell_pressed
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id:
+                - switch.servant_call_annunciator_bell
+            data: {}
+          - service: timer.start
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - timer.servant_call_bell_timer
+          - service: switch.turn_on
+            target:
+              entity_id: switch.servant_call_annunciator_flag_01
+            data: {}
+      - conditions:
+          - condition: trigger
+            id:
+              - bell_timer_end
+        sequence:
+          - wait_template: >
+              {{ is_state('binary_sensor.servant_call_annunciator_bell_push_1',
+              'off') }}
+            continue_on_timeout: true
+          - service: switch.turn_off
+            metadata: {}
+            data: {}
+            target:
+              entity_id: switch.servant_call_annunciator_bell
+mode: queued
