@@ -1,0 +1,168 @@
+type: vertical-stack
+cards:
+  - type: entities
+    entities: []
+    title: Servant Call Annunciator
+  - type: horizontal-stack
+    cards:
+      - type: tile
+        show_entity_picture: false
+        name: Bell Push 1
+        icon: mdi:doorbell
+        entity: binary_sensor.servant_call_annunciator_bell_push_1
+      - type: tile
+        name: Bell Push 2
+        icon: mdi:doorbell
+        entity: binary_sensor.servant_call_annunciator_bell_push_2
+  - type: grid
+    square: true
+    columns: 5
+    cards:
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 1
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_01
+          data: {}
+        show_state: false
+        entity: switch.servant_call_annunciator_flag_01
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 2
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_02
+          data: {}
+        entity: switch.servant_call_annunciator_flag_02
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 3
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_03
+          data: {}
+        entity: switch.servant_call_annunciator_flag_03
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 4
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_04
+          data: {}
+        entity: switch.servant_call_annunciator_flag_04
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 5
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_05
+          data: {}
+        entity: switch.servant_call_annunciator_flag_05
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 6
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_06
+          data: {}
+        entity: switch.servant_call_annunciator_flag_06
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 7
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_07
+          data: {}
+        entity: switch.servant_call_annunciator_flag_07
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 8
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_08
+          data: {}
+        entity: switch.servant_call_annunciator_flag_08
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 9
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_09
+          data: {}
+        entity: switch.servant_call_annunciator_flag_09
+      - show_name: true
+        show_icon: true
+        type: button
+        name: Call 10
+        icon: mdi:button-pointer
+        tap_action:
+          action: call-service
+          service: switch.turn_on
+          target:
+            entity_id: switch.servant_call_annunciator_flag_10
+          data: {}
+        entity: switch.servant_call_annunciator_flag_10
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: entities
+        entities:
+          - entity: switch.servant_call_annunciator_bell
+            name: Bell
+        state_color: true
+        show_header_toggle: false
+      - type: entities
+        entities:
+          - entity: timer.servant_call_bell_timer
+            name: Bell timer
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: entities
+        entities:
+          - entity: switch.servant_call_annunciator_interior_light
+            name: Light
+        state_color: true
+      - type: entities
+        entities:
+          - entity: timer.servant_call_box_light_timer
+            name: Light timer
