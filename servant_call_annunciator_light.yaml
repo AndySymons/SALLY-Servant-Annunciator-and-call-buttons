@@ -1,0 +1,53 @@
+alias: Servant call annunciator light
+description: >-
+  Whenever a call is initiated (Flag turned on), this automation turns on the
+  light for a period set in the timer helper
+trigger:
+  - platform: state
+    entity_id:
+      - switch.servant_call_annunciator_flag_01
+      - switch.servant_call_annunciator_flag_02
+      - switch.servant_call_annunciator_flag_03
+      - switch.servant_call_annunciator_flag_04
+      - switch.servant_call_annunciator_flag_05
+      - switch.servant_call_annunciator_flag_06
+      - switch.servant_call_annunciator_flag_07
+      - switch.servant_call_annunciator_flag_08
+      - switch.servant_call_annunciator_flag_09
+      - switch.servant_call_annunciator_flag_10
+    to: "on"
+    id: flag_activated
+  - platform: state
+    entity_id:
+      - timer.servant_call_box_light_timer
+    to: idle
+    id: light_timer_end
+condition: []
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id:
+              - flag_activated
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id:
+                - switch.servant_call_annunciator_interior_light
+            data: {}
+          - service: timer.start
+            metadata: {}
+            data: {}
+            target:
+              entity_id:
+                - timer.servant_call_box_light_timer
+      - conditions:
+          - condition: trigger
+            id:
+              - light_timer_end
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: switch.servant_call_annunciator_interior_light
+            data: {}
+mode: queued
