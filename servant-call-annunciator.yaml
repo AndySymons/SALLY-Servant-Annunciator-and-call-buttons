@@ -1,0 +1,228 @@
+esphome:
+  name: servant-call-annunciator
+  friendly_name: Servant Call Annunciator 
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "dpXfC98lZ4ylgUxR85Hdww/0LzlJBosAaIV47J2cGhA="
+
+ota:
+  platform: esphome 
+  password: "abf0b575aabd5c9f3e59b2842a553482"
+
+safe_mode: 
+
+wifi:
+  networks:
+  - ssid: !secret wifi1_ssid
+    password: !secret wifi1_password
+  - ssid: !secret wifi2_ssid
+    password: !secret wifi2_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Servant-Call-Annunciator"
+    password: "t6s1DbrtLrFl"
+
+captive_portal:
+
+
+substitutions:
+  device_name: ""
+  device_id: ""
+# device_name: 'Servant Call Annunciator'
+# device_id: servant_call_annunciator
+  flag_pulse_length: 100ms
+
+i2c:
+  - id: i2c_bus
+    sda: 4
+    scl: 5
+    scan: true
+    frequency: 50kHz
+  
+pcf8574:
+  - id: pcf_85745_hub
+    i2c_id: i2c_bus
+    address: 0x27
+    pcf8575: true
+
+# The annubciator flags
+
+switch:
+
+  - platform: gpio
+    name: ${device_name} Flag 01
+    id: ${device_id}_flag_01 
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 7
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_01 
+
+  - platform: gpio
+    name: ${device_name} Flag 02
+    id: ${device_id}_flag_02
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 8
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_02 
+
+  - platform: gpio
+    name: ${device_name} Flag 03
+    id: ${device_id}_flag_03
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 9
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_03 
+
+  - platform: gpio
+    name: ${device_name} Flag 04
+    id: ${device_id}_flag_04
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 10
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_04 
+
+  - platform: gpio
+    name: ${device_name} Flag 05
+    id: ${device_id}_flag_05
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 11
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_05 
+
+  - platform: gpio
+    name: ${device_name} Flag 06
+    id: ${device_id}_flag_06
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 2
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_06
+
+  - platform: gpio
+    name: ${device_name} Flag 07
+    id: ${device_id}_flag_07
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 3
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_07
+
+  - platform: gpio
+    name: ${device_name} Flag 08
+    id: ${device_id}_flag_08
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 4
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_08 
+
+  - platform: gpio
+    name: ${device_name} Flag 09
+    id: ${device_id}_flag_09
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 5
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_09
+
+  - platform: gpio
+    name: ${device_name} Flag 10
+    id: ${device_id}_flag_10
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 6
+      mode: OUTPUT
+      inverted: true
+    on_turn_on:
+    - delay: ${flag_pulse_length}
+    - switch.turn_off: ${device_id}_flag_10 
+
+
+# The bell 
+
+  - platform: gpio
+    name: ${device_name} Bell
+    id: ${device_id}_bell
+    pin: 
+      pcf8574: pcf_85745_hub
+      number: 13
+      mode: OUTPUT
+      inverted: true
+
+
+# The interior light switch
+# (kept as a swtch as this is actually a relay)
+
+  - platform: gpio
+    name: ${device_name} Interior Light
+    id: ${device_id}_interior_light 
+    pin:
+      pcf8574: pcf_85745_hub
+      number: 12
+      mode: OUTPUT
+      inverted: true
+
+
+#The bell push sensors 
+
+binary_sensor:
+  - platform: gpio
+    name: ${device_name} Bell Push 1
+    id: ${device_id}_bell_push_1
+    pin:
+      number: 3
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+
+  - platform: gpio
+    name: ${device_name} Bell Push 2
+    id: ${device_id}_bell_push_2
+    pin:
+      number: 2
+      mode:
+        input: true
+        pullup: true
+      inverted: true
