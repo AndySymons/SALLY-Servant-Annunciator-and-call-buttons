@@ -1,0 +1,92 @@
+esphome:
+  name: servant-call-buttons
+  friendly_name: Servant Call Buttons
+
+esp32:
+  board: esp32-s2-saola-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+# Not encrypted
+
+ota:
+  password: "db17721bf8ead33d333afdc4a9b23eec"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "S2-Mini-Test Fallback Hotspot"
+    password: "EgB4EGEAjqQB"
+
+captive_portal:
+
+# ----------------------------------------------------------------------------------
+# Custom part 
+
+substitutions:
+  device_name: 'Servant Call Buttons'
+  device_id: servant_call_buttons
+
+# The buttons. They connect to ground for 'on'. 
+
+binary_sensor:
+
+  - platform: gpio
+    name: ${device_name} Button 1
+    id: ${device_id}_button_1
+    pin:
+      number: 17
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+
+  - platform: gpio
+    name: ${device_name} Button 2
+    id: ${device_id}_button_2
+    pin:
+      number: 16
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+
+  - platform: gpio
+    name: ${device_name} Button 3
+    id: ${device_id}_button_3
+    pin:
+      number: 21
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+
+  - platform: gpio
+    name: ${device_name} Button 4
+    id: ${device_id}_button_4
+    pin:
+      number: 18
+      mode:
+        input: true
+        pullup: true
+      inverted: true
+
+#On-board LED for status or just to play with!
+light:
+  - platform: status_led
+    name: ${device_name} On-board LED
+    id: ${device_id}_onboard_led
+    pin: 
+      number: 15
+      mode:
+        output: true
+      inverted: false
+   
